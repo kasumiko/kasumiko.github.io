@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>かすみこめも(3冊目)</title>
+    <description>かすかたんのブログです。</description>
+    <link>http://localhost:4000/</link>
+    <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
+    <pubDate>Thu, 30 Nov 2017 03:49:37 +0900</pubDate>
+    <lastBuildDate>Thu, 30 Nov 2017 03:49:37 +0900</lastBuildDate>
+    <generator>Jekyll v3.6.0</generator>
+    
+      <item>
+        <title>お久しぶりです.</title>
+        <description>&lt;p&gt;かすかたんだよ〜〜〜&lt;/p&gt;
+
+&lt;p&gt;Jykyllの使い方思い出せなくて更新できなくなってました．&lt;/p&gt;
+
+&lt;p&gt;思い出したのでぼちぼち更新していきます．&lt;/p&gt;
+</description>
+        <pubDate>Fri, 02 Jun 2017 03:15:00 +0900</pubDate>
+        <link>http://localhost:4000/diary/2017/06/02/ltns.html</link>
+        <guid isPermaLink="true">http://localhost:4000/diary/2017/06/02/ltns.html</guid>
+        
+        
+        <category>diary</category>
+        
+      </item>
+    
+      <item>
+        <title>T大学pdfアップロード印刷システムにLaTeXで生成したpdfが弾かれる件</title>
+        <description>&lt;p&gt;久しぶりにブログを書きます。かすかたんです。&lt;/p&gt;
+
+&lt;p&gt;T大学の印刷システムにはプリンタに接続しなくても、pdfをアップロードするだけで資料を印刷できるという便利な機能があります。&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://www.u.tsukuba.ac.jp/icho13/pdfupload.html&quot;&gt;筑波大学全学計算機システム&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;こちらの説明に従うだけであとはプリンタに学生証をかざすだけで印刷できます。&lt;/p&gt;
+
+&lt;p&gt;できる…はずなんだけど…&lt;/p&gt;
+
+&lt;hr /&gt;
+
+&lt;!--不正なpdf.png--&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/pdfupload/failure.png&quot; alt=&quot;failure&quot; style=&quot;display:block;margin-left:auto;margin-right:auto;margin-top:15px;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;できない。&lt;/p&gt;
+
+&lt;p&gt;実は2年前から同じ状態で、LaTeXから出力したpdfがなぜか弾かれてしまう。&lt;/p&gt;
+
+&lt;p&gt;(僕は毎回プリンタのある部屋まで行ってPCを立ち上げてUSBメモリからpdfを開いて印刷という
+とても無駄なことをしていた。)&lt;/p&gt;
+
+&lt;p&gt;不正なpdfとはいったい何なのか。我々はそれを探るため、アマゾン奥地へと向かった。&lt;/p&gt;
+
+&lt;h1 id=&quot;検証&quot;&gt;検証&lt;/h1&gt;
+&lt;p&gt;どうやらアップロードできないpdf(不正なpdf)とアップロードできるpdf(正常なpdf)が存在するらしい。&lt;/p&gt;
+
+&lt;p&gt;Wordから出力したpdfは正常なpdfとして認識されるので、LaTeXから出力したpdfと見比べてみる。&lt;/p&gt;
+
+&lt;!--Wordtest.png,LaTeXtest.png--&gt;
+&lt;p&gt;&lt;img src=&quot;/images/pdfupload/wordtest.png&quot; alt=&quot;Wordtest&quot; style=&quot;margin-left:auto;&quot; /&gt;
+&lt;img src=&quot;/images/pdfupload/latextest.png&quot; alt=&quot;TeXtest&quot; style=&quot;margin-right:auto;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;ぱっと見ですぐわかるのはバージョンの違いだ。
+正常なpdfはバージョンが1.3で不正なpdfは1.5になっている。&lt;/p&gt;
+
+&lt;p&gt;pdfのバージョンごとの違いについて見てみる。&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/pdfupload/pdfver.png&quot; alt=&quot;pdfver&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://help.adobe.com/ja_JP/acrobat/pro/using/WS25210BC7-2345-4e30-A05C-80903A3B36EE.html&quot;&gt;Adobe Acrobat Pro ユーザーガイド&lt;/a&gt;
+より&lt;/p&gt;
+
+&lt;!--pdfバージョン比較画像 http://help.adobe.com/ja_JP/acrobat/pro/using/WS25210BC7-2345-4e30-A05C-80903A3B36EE.html より--&gt;
+
+&lt;p&gt;1.4と1.5の間で互換が打ち切られてるっぽい…？&lt;/p&gt;
+
+&lt;p&gt;じゃあdvipdfmxをいじって出力ファイルのバージョンを変えられれば解決しそうだ。&lt;/p&gt;
+
+&lt;h1 id=&quot;解決&quot;&gt;解決&lt;/h1&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://texwiki.texjp.org/?dvipdfmx&quot;&gt;TeXwiki dvipdfmx&lt;/a&gt;
+によるとpdf1.4で出力したい場合は、プリアンプルに&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+\special{pdf: minorversion=4}
+&lt;/code&gt;
+と書くかコマンドラインオプションに&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;
+-V 4
+&lt;/code&gt;
+をつけるだけでいいらしい。&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&quot;language-latex:pdftest.tex&quot;&gt;\documentclass[11pt]{jsarticle}
+\special{pdf: minorversion=4}
+\begin{document}
+	あいうえお
+\end{document}  
+&lt;/code&gt;&lt;/pre&gt;
+&lt;hr /&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/pdfupload/success.png&quot; alt=&quot;success&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;やったぜ。&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h1 id=&quot;雑記&quot;&gt;雑記&lt;/h1&gt;
+&lt;p&gt;問題解消よりブログのためにmarkdown調べてた時間のほうが長かった。&lt;/p&gt;
+</description>
+        <pubDate>Sat, 11 Jun 2016 21:35:00 +0900</pubDate>
+        <link>http://localhost:4000/latex/2016/06/11/print-pdf.html</link>
+        <guid isPermaLink="true">http://localhost:4000/latex/2016/06/11/print-pdf.html</guid>
+        
+        
+        <category>LaTeX</category>
+        
+      </item>
+    
+      <item>
+        <title>ブログ移行しました。</title>
+        <description>&lt;p&gt;移行したよ〜〜〜&lt;/p&gt;
+</description>
+        <pubDate>Thu, 09 Jun 2016 19:49:36 +0900</pubDate>
+        <link>http://localhost:4000/%E5%A0%B1%E5%91%8A/2016/06/09/renewal-blog.html</link>
+        <guid isPermaLink="true">http://localhost:4000/%E5%A0%B1%E5%91%8A/2016/06/09/renewal-blog.html</guid>
+        
+        
+        <category>報告</category>
+        
+      </item>
+    
+  </channel>
+</rss>
